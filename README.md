@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/estahn/json-query-wrapper.png?branch=master)](https://travis-ci.org/estahn/json-query-wrapper)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/95079dc568414f938388af783c9a6672)](https://www.codacy.com/app/estahn/json-query-wrapper)
+[![Codacy Badge](https://api.codacy.com/project/badge/coverage/95079dc568414f938388af783c9a6672)](https://www.codacy.com/app/Codacy/php-codacy-coverage)
 [![Latest Stable Version](https://poser.pugx.org/estahn/json-query-wrapper/version.png)](https://packagist.org/packages/estahn/json-query-wrapper)
 [![Total Downloads](https://poser.pugx.org/estahn/json-query-wrapper/d/total.png)](https://packagist.org/packages/estahn/json-query-wrapper)
 
