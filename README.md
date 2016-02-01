@@ -11,14 +11,33 @@ json-query-wrapper is a wrapper for the popular command-line JSON processor "[jq
 
 ## Features
 
-* Convenient interface
-* Data Type Mapping
+* Easy to use interface
+* PHP data type mapping
 
 ## Installation
 
-## Usage
+```bash
+$ composer require estahn/json-query-wrapper
+```
 
-``
-$jq = JsonQueryWrapper\JsonQueryFactory::create();
-$jq->filter('.Foo.Bar');
-``
+## Usage
+`test.json`:
+```json
+{
+  "Foo": {
+    "Bar": "33"
+  }
+}
+```
+
+Example 1:
+```php
+$jq = JsonQueryWrapper\JsonQueryFactory::createWith('test.json');
+$jq->run('.Foo.Bar'); # int(33)
+```
+
+Example 2:
+```php
+$jq = JsonQueryWrapper\JsonQueryFactory::createWith('test.json');
+$jq->run('.Foo.Bar == "33"'); # Returns bool(true)
+```
