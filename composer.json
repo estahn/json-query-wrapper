@@ -28,5 +28,5 @@
         "psr-4": {
             "Test\\JsonQueryWrapper\\": "tests/JsonQueryWrapper"
         }
-    },
+    }
 }
