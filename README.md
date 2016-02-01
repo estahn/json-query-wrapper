@@ -21,6 +21,7 @@ $ composer require estahn/json-query-wrapper
 ```
 
 ## Usage
+### Basic usage
 `test.json`:
 ```json
 {
@@ -30,14 +31,38 @@ $ composer require estahn/json-query-wrapper
 }
 ```
 
-Example 1:
+**Example 1:**
 ```php
 $jq = JsonQueryWrapper\JsonQueryFactory::createWith('test.json');
 $jq->run('.Foo.Bar'); # int(33)
 ```
 
-Example 2:
+**Example 2:**
 ```php
 $jq = JsonQueryWrapper\JsonQueryFactory::createWith('test.json');
 $jq->run('.Foo.Bar == "33"'); # Returns bool(true)
 ```
+
+**Example 3:**
+```php
+$jq = JsonQueryWrapper\JsonQueryFactory::createWith('{"Foo":{"Bar":"33"}}');
+$jq->run('.Foo.Bar == "33"'); # Returns bool(true)
+```
+
+### Advanced usage
+
+**Example 1:**
+```php
+$jq = JsonQueryWrapper\JsonQueryFactory::create();
+$jq->setDataProvider(new JsonQueryWrapper\DataProvider\File('test.json');
+$jq->run('.Foo.Bar == "33"'); # Returns bool(true)
+```
+
+## Data Providers
+
+A "Data Provider" provides the wrapper with the necessary data to read from. It's a common interface for several providers. All providers implement the `DataProviderInterface` which essentially returns a path to the file for `jq`.
+
+Available providers:
+
+* Text - Regular PHP string containing JSON data
+* File - A path to a file containing JSON data
