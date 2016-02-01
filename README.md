@@ -64,5 +64,5 @@ A "Data Provider" provides the wrapper with the necessary data to read from. It'
 
 Available providers:
 
-* Text - Regular PHP string containing JSON data
-* File - A path to a file containing JSON data
+* `Text` - Regular PHP string containing JSON data
+* `File` - A path to a file containing JSON data
