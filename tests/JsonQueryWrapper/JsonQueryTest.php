@@ -76,9 +76,38 @@ class JsonQueryTest extends \PHPUnit_Framework_TestCase
 
     public function testFixProcessBuilderPileup()
     {
-        $pb = new ProcessBuilder();
-        $jq = new JsonQuery($pb, new DataTypeMapper());
-        $jq->setDataProvider(new Text(json_encode(['Foo' => ['Bar' => 33]])));
+        $data = json_encode(['Foo' => ['Bar' => 33]]);
+
+        $process1 = $this->getMockBuilder('Symfony\Component\Process\Process')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $process1->expects($this->once())->method('run');
+        $process1->expects($this->once())->method('getOutput')->will($this->returnValue(33));
+
+        $process2 = $this->getMockBuilder('Symfony\Component\Process\Process')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $process2->expects($this->once())->method('run');
+        $process2->expects($this->once())->method('getOutput')->will($this->returnValue(33));
+
+        $pb = $this->getMockBuilder('Symfony\Component\Process\ProcessBuilder')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $pb->expects($this->any())->method('setPrefix')->will($this->returnSelf());
+        $pb->expects($this->any())->method('setArguments')->will($this->returnSelf());
+        $pb->expects($this->any())->method('getProcess')->will($this->onConsecutiveCalls($process1, $process2));
+
+        $dtm = $this->getMockBuilder('JsonQueryWrapper\DataTypeMapper')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $dtm->expects($this->atMost(2))->method('map')->will($this->returnValue(33));
+
+        $provider = $this->getMockBuilder('JsonQueryWrapper\DataProvider\Text')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $jq = new JsonQuery($pb, $dtm);
+        $jq->setDataProvider($provider);
 
         $this->assertEquals(33, $jq->run('.Foo.Bar'));
         $this->assertEquals(33, $jq->run('.Foo.Bar'));
