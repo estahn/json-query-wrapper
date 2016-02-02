@@ -76,6 +76,11 @@ class DataTypeMapperTest extends \PHPUnit_Framework_TestCase
         $this->mapper->map('parse error: Expected another key-value pair at line 7, column 1');
     }
 
+    public function testNull()
+    {
+        $this->assertNull($this->mapper->map('null'));
+    }
+
     public function testJson()
     {
         $this->markTestIncomplete('Need to decide whether to convert JSON data');

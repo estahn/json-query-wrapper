@@ -54,6 +54,10 @@ class DataTypeMapper
             return false;
         }
 
+        if ($value === 'null') {
+            return NULL;
+        }
+
         // Map integers
         if (preg_match('/^"(\d+)"$/', $value, $matches)) {
             return (int)$matches[1];
