@@ -93,7 +93,8 @@ class JsonQueryTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $processBuilder->expects($this->any())->method('setPrefix')->will($this->returnSelf());
         $processBuilder->expects($this->any())->method('setArguments')->will($this->returnSelf());
-        $processBuilder->expects($this->any())->method('getProcess')->will($this->onConsecutiveCalls($process1, $process2));
+        $processBuilder->expects($this->any())->method('getProcess')
+                ->will($this->onConsecutiveCalls($process1, $process2));
 
         $dataTypeMapper = $this->getMockBuilder('JsonQueryWrapper\DataTypeMapper')
             ->disableOriginalConstructor()
