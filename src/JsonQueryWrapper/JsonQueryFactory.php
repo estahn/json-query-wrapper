@@ -40,7 +40,7 @@ class JsonQueryFactory
      *
      * @return JsonQuery
      */
-    static public function create()
+    public static function create()
     {
         return new JsonQuery(new ProcessBuilder(), new DataTypeMapper());
     }
@@ -51,7 +51,7 @@ class JsonQueryFactory
      * @param string $filenameOrText A path to a json file or json text
      * @return JsonQuery
      */
-    static public function createWith($filenameOrText)
+    public static function createWith($filenameOrText)
     {
         $provider = file_exists($filenameOrText) ? new File($filenameOrText) : new Text($filenameOrText);
 
