@@ -27,48 +27,8 @@
  * @link    http://github.com/estahn/json-query-wrapper for the canonical source repository
  */
 
-namespace JsonQueryWrapper;
-use JsonQueryWrapper\Exception\DataTypeMapperException;
+namespace JsonQueryWrapper\Exception;
 
-/**
- * Map data returned from jq to PHP data types
- *
- * @package JsonQueryWrapper
- */
-class DataTypeMapper
+class DataTypeMapperException extends \Exception
 {
-    /**
-     * Returns a PHP typed value
-     *
-     * @param string $value
-     * @return mixed
-     * @throws DataTypeMapperException
-     */
-    public function map($value)
-    {
-        if ($value === 'true') {
-            return true;
-        }
-
-        if ($value === 'false') {
-            return false;
-        }
-
-        // Map integers
-        if (preg_match('/^"(\d+)"$/', $value, $matches)) {
-            return (int)$matches[1];
-        }
-
-        // Map strings
-        if (preg_match('/^"(.*)"$/', $value, $matches)) {
-            return $matches[1];
-        }
-
-        // Map parser error
-        if (preg_match('/^parse error: (.*)$/', $value, $matches)) {
-            throw new DataTypeMapperException($matches[1]);
-        }
-
-        return $value;
-    }
 }
