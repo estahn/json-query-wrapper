@@ -1,6 +1,9 @@
 # JSON Query Wrapper
 
 [![Build Status](https://travis-ci.org/estahn/json-query-wrapper.png?branch=master)](https://travis-ci.org/estahn/json-query-wrapper)
+[![Build Status](https://scrutinizer-ci.com/g/estahn/json-query-wrapper/badges/build.png?b=master)](https://scrutinizer-ci.com/g/estahn/json-query-wrapper/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/estahn/json-query-wrapper/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/estahn/json-query-wrapper/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/estahn/json-query-wrapper/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/estahn/json-query-wrapper/?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/95079dc568414f938388af783c9a6672)](https://www.codacy.com/app/estahn/json-query-wrapper)
 [![Codacy Badge](https://api.codacy.com/project/badge/coverage/95079dc568414f938388af783c9a6672)](https://www.codacy.com/app/Codacy/php-codacy-coverage)
 [![Dependency Status](https://www.versioneye.com/user/projects/56af6f3c3d82b90032bff8d7/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56af6f3c3d82b90032bff8d7)
