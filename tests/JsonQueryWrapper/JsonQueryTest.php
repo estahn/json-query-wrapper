@@ -100,7 +100,7 @@ class JsonQueryTest extends \PHPUnit_Framework_TestCase
         $dtm = $this->getMockBuilder('JsonQueryWrapper\DataTypeMapper')
             ->disableOriginalConstructor()
             ->getMock();
-        $dtm->expects($this->atMost(2))->method('map')->will($this->returnValue(33));
+        $dtm->expects($this->any())->method('map')->will($this->onConsecutiveCalls(33, 33));
 
         $provider = $this->getMockBuilder('JsonQueryWrapper\DataProvider\Text')
             ->disableOriginalConstructor()
