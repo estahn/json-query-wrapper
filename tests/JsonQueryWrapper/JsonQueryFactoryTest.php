@@ -39,7 +39,7 @@ use JsonQueryWrapper\JsonQueryFactory;
 class JsonQueryFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException \JsonQueryWrapper\Exception\DataProviderMissing
+     * @expectedException \JsonQueryWrapper\Exception\DataProviderMissingException
      */
     public function testCreate()
     {

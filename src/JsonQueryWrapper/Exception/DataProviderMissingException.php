@@ -29,6 +29,6 @@
 
 namespace JsonQueryWrapper\Exception;
 
-class DataProviderMissing extends \Exception
+class DataProviderMissingException extends \Exception
 {
 }

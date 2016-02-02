@@ -30,7 +30,7 @@
 namespace JsonQueryWrapper;
 
 use JsonQueryWrapper\DataProvider\DataProviderInterface;
-use JsonQueryWrapper\Exception\DataProviderMissing;
+use JsonQueryWrapper\Exception\DataProviderMissingException;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
@@ -89,12 +89,12 @@ class JsonQuery
      *
      * @param string $filter
      * @return mixed
-     * @throws DataProviderMissing
+     * @throws DataProviderMissingException
      */
     public function run($filter)
     {
         if (!$this->dataProvider instanceof DataProviderInterface) {
-            throw new DataProviderMissing('A data provider such as file or text is missing.');
+            throw new DataProviderMissingException('A data provider such as file or text is missing.');
         }
 
         $this->builder
