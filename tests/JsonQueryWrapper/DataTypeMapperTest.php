@@ -68,6 +68,14 @@ class DataTypeMapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(33, $value);
     }
 
+    /**
+     * @expectedException \JsonQueryWrapper\Exception\DataTypeMapperException
+     */
+    public function testParserError()
+    {
+        $this->mapper->map('parse error: Expected another key-value pair at line 7, column 1');
+    }
+
     public function testJson()
     {
         $this->markTestIncomplete('Need to decide whether to convert JSON data');
