@@ -97,12 +97,12 @@ class JsonQuery
             throw new DataProviderMissingException('A data provider such as file or text is missing.');
         }
 
-        $this->builder
-            ->setPrefix($this->cmd)
+        $builder = $this->builder->create();
+        $builder->setPrefix($this->cmd)
             ->add($filter)
             ->add($this->dataProvider->getPath());
 
-        $process = $this->builder->getProcess();
+        $process = $builder->getProcess();
         $process->run();
 
         $result = trim($process->getOutput());

@@ -73,4 +73,14 @@ class JsonQueryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($jq->run('.Foo.Bar == 33'));
     }
+
+    public function testFixProcessBuilderPileup()
+    {
+        $pb = new ProcessBuilder();
+        $jq = new JsonQuery($pb, new DataTypeMapper());
+        $jq->setDataProvider(new Text(json_encode(['Foo' => ['Bar' => 33]])));
+
+        $this->assertEquals(33, $jq->run('.Foo.Bar'));
+        $this->assertEquals(33, $jq->run('.Foo.Bar'));
+    }
 }
