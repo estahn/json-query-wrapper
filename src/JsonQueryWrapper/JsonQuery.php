@@ -100,7 +100,7 @@ class JsonQuery
         $builder = $this->builder;
         $builder
             ->setPrefix($this->cmd)
-            ->setArguments([$filter, $this->dataProvider->getPath()]);
+            ->setArguments(['-M', $filter, $this->dataProvider->getPath()]);
 
         $process = $builder->getProcess();
         $process->run();
