@@ -38,7 +38,7 @@ $ composer require estahn/json-query-wrapper
 **Example 1:**
 ```php
 $jq = JsonQueryWrapper\JsonQueryFactory::createWith('test.json');
-$jq->run('.Foo.Bar'); # int(33)
+$jq->run('.Foo.Bar'); # string(33)
 ```
 
 **Example 2:**

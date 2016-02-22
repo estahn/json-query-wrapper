@@ -59,8 +59,13 @@ class DataTypeMapper
         }
 
         // Map integers
-        if (preg_match('/^"(\d+)"$/', $value, $matches)) {
+        if (preg_match('/^(\d+)$/', $value, $matches)) {
             return (int)$matches[1];
+        }
+
+        // Map floats
+        if (preg_match('/^(\d+\.\d+)$/', $value, $matches)) {
+            return (float)$matches[1];
         }
 
         // Map strings
