@@ -70,3 +70,8 @@ Available providers:
 
 * `Text` - Regular PHP string containing JSON data
 * `File` - A path to a file containing JSON data
+
+## Alternatives
+
+* [jmespath.php](https://github.com/jmespath/jmespath.php) - Declaratively specify how to extract elements from a JSON document, in PHP
+* [JSONPath](https://github.com/FlowCommunications/JSONPath) - JSONPath implementation for PHP (based on Stefan Goessner's JSONPath script)
