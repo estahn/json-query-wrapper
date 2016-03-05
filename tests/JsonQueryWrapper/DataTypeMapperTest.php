@@ -60,12 +60,28 @@ class DataTypeMapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Fo"o', $this->mapper->map('"Fo"o"'));
     }
 
-    public function testInteger()
+    public function testStringWithNumber()
     {
         $value = $this->mapper->map('"33"');
 
+        $this->assertInternalType('string', $value);
+        $this->assertEquals('33', $value);
+    }
+
+    public function testInteger()
+    {
+        $value = $this->mapper->map('33');
+
         $this->assertInternalType('int', $value);
         $this->assertEquals(33, $value);
+    }
+
+    public function testFloat()
+    {
+        $value = $this->mapper->map('33.02');
+
+        $this->assertInternalType('float', $value);
+        $this->assertEquals(33.02, $value);
     }
 
     /**
