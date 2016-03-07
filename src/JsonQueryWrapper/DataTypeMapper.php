@@ -1,6 +1,6 @@
 <?php
 /**
- * JSON Query Wrapper
+ * JSON Query Wrapper.
  *
  * (The MIT license)
  * Copyright (c) 2016 Enrico Stahn
@@ -23,26 +23,25 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * @package JsonQueryWrapper
  * @link    http://github.com/estahn/json-query-wrapper for the canonical source repository
  */
-
 namespace JsonQueryWrapper;
+
 use JsonQueryWrapper\Exception\DataTypeMapperException;
 
 /**
- * Map data returned from jq to PHP data types
- *
- * @package JsonQueryWrapper
+ * Map data returned from jq to PHP data types.
  */
 class DataTypeMapper
 {
     /**
-     * Returns a PHP typed value
+     * Returns a PHP typed value.
      *
      * @param string $value
-     * @return mixed
+     *
      * @throws DataTypeMapperException
+     *
+     * @return mixed
      */
     public function map($value)
     {
@@ -55,17 +54,17 @@ class DataTypeMapper
         }
 
         if ($value === 'null') {
-            return NULL;
+            return;
         }
 
         // Map integers
         if (preg_match('/^(\d+)$/', $value, $matches)) {
-            return (int)$matches[1];
+            return (int) $matches[1];
         }
 
         // Map floats
         if (preg_match('/^(\d+\.\d+)$/', $value, $matches)) {
-            return (float)$matches[1];
+            return (float) $matches[1];
         }
 
         // Map strings
