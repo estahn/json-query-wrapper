@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * JSON Query Wrapper.
  *
  * (The MIT license)
