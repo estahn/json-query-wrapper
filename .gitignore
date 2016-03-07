@@ -1,3 +1,5 @@
 vendor/
 tests/log/
 composer.lock
+build/
+.idea/
