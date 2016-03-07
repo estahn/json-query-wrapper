@@ -1,6 +1,6 @@
 <?php
 /**
- * JSON Query Wrapper
+ * JSON Query Wrapper.
  *
  * (The MIT license)
  * Copyright (c) 2016 Enrico Stahn
@@ -23,18 +23,14 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * @package JsonQueryWrapper
  * @link    http://github.com/estahn/json-query-wrapper for the canonical source repository
  */
-
 namespace tests\JsonQueryWrapper;
 
 use JsonQueryWrapper\JsonQueryFactory;
 
 /**
- * Class JsonQueryFactoryTest
- *
- * @package JsonQueryWrapper
+ * Class JsonQueryFactoryTest.
  */
 class JsonQueryFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -52,7 +48,7 @@ class JsonQueryFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateWith()
     {
-        $jq = JsonQueryFactory::createWith(json_encode(['Foo' => [ 'Bar' => 33]]));
+        $jq = JsonQueryFactory::createWith(json_encode(['Foo' => ['Bar' => 33]]));
         $this->assertInstanceOf('JsonQueryWrapper\JsonQuery', $jq);
     }
 }

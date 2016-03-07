@@ -1,6 +1,6 @@
 <?php
 /**
- * JSON Query Wrapper
+ * JSON Query Wrapper.
  *
  * (The MIT license)
  * Copyright (c) 2016 Enrico Stahn
@@ -23,10 +23,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * @package JsonQueryWrapper
  * @link    http://github.com/estahn/json-query-wrapper for the canonical source repository
  */
-
 namespace JsonQueryWrapper;
 
 use JsonQueryWrapper\DataProvider\DataProviderInterface;
@@ -34,9 +32,7 @@ use JsonQueryWrapper\Exception\DataProviderMissingException;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**
- * Class JsonQuery
- *
- * @package JsonQueryWrapper
+ * Class JsonQuery.
  */
 class JsonQuery
 {
@@ -56,7 +52,7 @@ class JsonQuery
     protected $dataProvider;
 
     /**
-     * Path to the jq command
+     * Path to the jq command.
      *
      * @var string
      */
@@ -75,7 +71,7 @@ class JsonQuery
     }
 
     /**
-     * Set the path to the jq command
+     * Set the path to the jq command.
      *
      * @param string $cmd
      */
@@ -85,11 +81,13 @@ class JsonQuery
     }
 
     /**
-     * Runs the command-line and returns
+     * Runs the command-line and returns.
      *
      * @param string $filter
-     * @return mixed
+     *
      * @throws DataProviderMissingException
+     *
+     * @return mixed
      */
     public function run($filter)
     {

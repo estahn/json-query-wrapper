@@ -1,6 +1,6 @@
 <?php
 /**
- * JSON Query Wrapper
+ * JSON Query Wrapper.
  *
  * (The MIT license)
  * Copyright (c) 2016 Enrico Stahn
@@ -23,10 +23,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * @package JsonQueryWrapper
  * @link    http://github.com/estahn/json-query-wrapper for the canonical source repository
  */
-
 namespace JsonQueryWrapper;
 
 use JsonQueryWrapper\DataProvider\File;
@@ -36,7 +34,7 @@ use Symfony\Component\Process\ProcessBuilder;
 class JsonQueryFactory
 {
     /**
-     * Creates a JsonQuery object without data provider
+     * Creates a JsonQuery object without data provider.
      *
      * @return JsonQuery
      */
@@ -46,9 +44,10 @@ class JsonQueryFactory
     }
 
     /**
-     * Creates a JsonQuery object with data provider
+     * Creates a JsonQuery object with data provider.
      *
      * @param string $filenameOrText A path to a json file or json text
+     *
      * @return JsonQuery
      */
     public static function createWith($filenameOrText)

@@ -1,6 +1,6 @@
 <?php
 /**
- * JSON Query Wrapper
+ * JSON Query Wrapper.
  *
  * (The MIT license)
  * Copyright (c) 2016 Enrico Stahn
@@ -23,28 +23,24 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  *
- * @package JsonQueryWrapper
  * @link    http://github.com/estahn/json-query-wrapper for the canonical source repository
  */
-
 namespace JsonQueryWrapper\DataProvider;
 
 /**
- * Converts text (string) to be consumed by jq
- *
- * @package JsonQueryWrapper
+ * Converts text (string) to be consumed by jq.
  */
 class Text implements DataProviderInterface
 {
     /**
-     * Text data to be converted
+     * Text data to be converted.
      *
      * @var string
      */
     protected $data;
 
     /**
-     * Path to the generated file
+     * Path to the generated file.
      *
      * @var string
      */
@@ -61,7 +57,7 @@ class Text implements DataProviderInterface
     }
 
     /**
-     * Returns the path to the generated file
+     * Returns the path to the generated file.
      *
      * @return string
      */
