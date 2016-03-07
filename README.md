@@ -5,6 +5,7 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/56af6f3c3d82b90032bff8d7/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56af6f3c3d82b90032bff8d7)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/727aca9e-cd01-49b7-94f7-a26030ba5639/mini.png)](https://insight.sensiolabs.com/projects/727aca9e-cd01-49b7-94f7-a26030ba5639)
 [![Build Status](https://travis-ci.org/estahn/json-query-wrapper.png?branch=master)](https://travis-ci.org/estahn/json-query-wrapper)
+[![StyleCI](https://styleci.io/repos/38034716/shield)](https://styleci.io/repos/38034716)
 
 json-query-wrapper is a wrapper for the popular command-line JSON processor "[jq](https://stedolan.github.io/jq/)".
 
