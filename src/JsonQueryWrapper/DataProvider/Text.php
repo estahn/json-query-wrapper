@@ -48,8 +48,10 @@ class Text implements DataProviderInterface
     public function getPath()
     {
         if (empty($this->path)) {
-            $this->path = tempnam(sys_get_temp_dir(), 'jq');
-            file_put_contents($this->path, $this->data);
+            $file = tmpfile();
+            fwrite($file, $this->data);
+            $metadata = stream_get_meta_data($file);
+            $this->path = $metadata['uri'];
         }
 
         return $this->path;
