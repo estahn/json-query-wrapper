@@ -30,9 +30,6 @@ class Text implements DataProviderInterface
      */
     protected $path;
 
-    /** @var resource */
-    private $file;
-
     /**
      * Text constructor.
      *
@@ -51,9 +48,9 @@ class Text implements DataProviderInterface
     public function getPath()
     {
         if (empty($this->path)) {
-            $this->file = tmpfile();
-            fwrite($this->file, $this->data);
-            $metadata = stream_get_meta_data($this->file);
+            $file = tmpfile();
+            fwrite($file, $this->data);
+            $metadata = stream_get_meta_data($file);
             $this->path = $metadata['uri'];
         }
 
