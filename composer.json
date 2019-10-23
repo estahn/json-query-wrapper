@@ -1,5 +1,5 @@
 {
-    "name": "invoiceSharing/json-query-wrapper",
+    "name": "invoicesharing/json-query-wrapper",
     "type": "library",
     "description": "Wrapper for jq, a lightweight and flexible command-line JSON processor",
     "keywords": ["jq", "json", "query"],
