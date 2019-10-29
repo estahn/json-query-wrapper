@@ -30,11 +30,7 @@ class Text implements DataProviderInterface
      */
     protected $path;
 
-    /** @var string **/
-    private const PREFIX = "JQ_";
-
-    /** @var string **/
-    private const DIRECTORY = "/tmp";
+    protected $file;
 
     /**
      * Text constructor.
@@ -54,10 +50,10 @@ class Text implements DataProviderInterface
     public function getPath()
     {
         if (empty($this->path)) {
-            $this->path = tempnam(self::DIRECTORY, self::PREFIX);
-            $resource = fopen($this->path, "w");
-            fwrite($resource, $this->data);
-            fclose($resource);
+            $this->file = tmpfile();
+            fwrite($this->file, $this->data);
+            $metadata = stream_get_meta_data($this->file);
+            $this->path = $metadata['uri'];
         }
 
         return $this->path;
