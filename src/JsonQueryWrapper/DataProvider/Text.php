@@ -30,6 +30,13 @@ class Text implements DataProviderInterface
      */
     protected $path;
 
+    /**
+     * Pointer to the file required
+     * When the php process finish deletes the temp file, with this attribute pointing to the temp file php waits to remove
+     * the file until is not is finished
+     *
+     * @var string
+     */
     protected $file;
 
     /**
