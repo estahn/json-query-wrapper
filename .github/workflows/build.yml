@@ -21,9 +21,6 @@ jobs:
         - 8.0
         - hhvm
     steps:
-      - uses: actions/setup-php@v1
-        with:
-          php-version: ${{ matrix.php }}
       - uses: actions/checkout@v2
       - uses: php-actions/composer@v5
       - uses: php-actions/phpunit@v2
