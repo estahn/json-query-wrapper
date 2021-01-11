@@ -13,7 +13,7 @@ namespace JsonQueryWrapper;
 
 use JsonQueryWrapper\DataProvider\File;
 use JsonQueryWrapper\DataProvider\Text;
-use Symfony\Component\Process\ProcessBuilder;
+use JsonQueryWrapper\Process\ProcessFactory;
 
 class JsonQueryFactory
 {
@@ -24,7 +24,7 @@ class JsonQueryFactory
      */
     public static function create()
     {
-        return new JsonQuery(new ProcessBuilder(), new DataTypeMapper());
+        return new JsonQuery(new ProcessFactory(), new DataTypeMapper());
     }
 
     /**
@@ -38,7 +38,7 @@ class JsonQueryFactory
     {
         $provider = file_exists($filenameOrText) ? new File($filenameOrText) : new Text($filenameOrText);
 
-        $jq = new JsonQuery(new ProcessBuilder(), new DataTypeMapper());
+        $jq = new JsonQuery(new ProcessFactory(), new DataTypeMapper());
         $jq->setDataProvider($provider);
 
         return $jq;

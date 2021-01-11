@@ -14,7 +14,9 @@ namespace Tests\JsonQueryWrapper;
 use JsonQueryWrapper\DataProvider\Text;
 use JsonQueryWrapper\DataTypeMapper;
 use JsonQueryWrapper\JsonQuery;
-use Symfony\Component\Process\ProcessBuilder;
+use JsonQueryWrapper\Process\ProcessFactoryInterface;
+use Symfony\Component\Process\Process;
+
 
 /**
  * Class JsonQuery.
@@ -23,72 +25,34 @@ class JsonQueryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCmdChange()
     {
-        $this->markTestSkipped('WIP');
+        $expected = 'Arthur';
+        $json = ['id' => 1, 'name' => $expected, 'age' => 21];
+        $dataProvider = new Text(json_encode($json));
 
-        $builder = new ProcessBuilder();
+        $process = $this->createMock(Process::class);
+        $process
+            ->method('run');
 
-        $builder = $this
-            ->getMockBuilder('Symfony\Component\Process\ProcessBuilder')
-            ->disableOriginalConstructor()
-            ->getMock()
-            ->method('setPrefix')->with('foobar')->will($this->returnSelf());
+        $process
+            ->method('getOutput')
+            ->willReturn($expected);
 
-        $test = json_encode(['Foo' => ['Bar' => 33]]);
+        $processFactory = $this->createMock(ProcessFactoryInterface::class);
+        $processFactory
+            ->method('build')
+            ->willReturn($process);
 
-        $jq = new JsonQuery($builder, new DataTypeMapper());
-        $jq->setCmd('foobar');
+        $mapper = new DataTypeMapper();
 
-        $this->assertTrue($jq->run('.Foo.Bar == 33'));
-    }
+        $sut = new JsonQuery(
+            $processFactory,
+            $mapper
+        );
 
-    public function testSomething()
-    {
-        $this->markTestSkipped('WIP');
-
-        $test = json_encode(['Foo' => ['Bar' => 33]]);
-
-        $jq = new JsonQuery(new ProcessBuilder(), new DataTypeMapper());
-        $jq->setCmd('foobar');
-        $jq->setDataProvider(new Text($test));
-
-        $this->assertTrue($jq->run('.Foo.Bar == 33'));
-    }
-
-    public function testFixProcessBuilderPileup()
-    {
-        $process1 = $this->getMockBuilder('Symfony\Component\Process\Process')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $process1->expects($this->once())->method('run');
-        $process1->expects($this->once())->method('getOutput')->will($this->returnValue(33));
-
-        $process2 = $this->getMockBuilder('Symfony\Component\Process\Process')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $process2->expects($this->once())->method('run');
-        $process2->expects($this->once())->method('getOutput')->will($this->returnValue(33));
-
-        $processBuilder = $this->getMockBuilder('Symfony\Component\Process\ProcessBuilder')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $processBuilder->expects($this->any())->method('setPrefix')->will($this->returnSelf());
-        $processBuilder->expects($this->any())->method('setArguments')->will($this->returnSelf());
-        $processBuilder->expects($this->any())->method('getProcess')
-                ->will($this->onConsecutiveCalls($process1, $process2));
-
-        $dataTypeMapper = $this->getMockBuilder('JsonQueryWrapper\DataTypeMapper')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $dataTypeMapper->expects($this->any())->method('map')->will($this->onConsecutiveCalls(33, 33));
-
-        $provider = $this->getMockBuilder('JsonQueryWrapper\DataProvider\Text')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $jsonQuery = new JsonQuery($processBuilder, $dataTypeMapper);
-        $jsonQuery->setDataProvider($provider);
-
-        $this->assertEquals(33, $jsonQuery->run('.Foo.Bar'));
-        $this->assertEquals(33, $jsonQuery->run('.Foo.Bar'));
+        $sut->setDataProvider($dataProvider);
+        static::assertEquals(
+            $expected,
+            $sut->run('.name')
+        );
     }
 }
