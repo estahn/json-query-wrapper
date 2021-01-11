@@ -31,6 +31,15 @@ class Text implements DataProviderInterface
     protected $path;
 
     /**
+     * Pointer to the file required
+     * When the php process finish deletes the temp file, with this attribute pointing to the temp file php waits to remove
+     * the file until is not is finished
+     *
+     * @var resource
+     */
+    protected $file;
+
+    /**
      * Text constructor.
      *
      * @param $data
@@ -48,8 +57,10 @@ class Text implements DataProviderInterface
     public function getPath()
     {
         if (empty($this->path)) {
-            $this->path = tempnam(sys_get_temp_dir(), 'jq');
-            file_put_contents($this->path, $this->data);
+            $this->file = tmpfile();
+            fwrite($this->file, $this->data);
+            $metadata = stream_get_meta_data($this->file);
+            $this->path = $metadata['uri'];
         }
 
         return $this->path;

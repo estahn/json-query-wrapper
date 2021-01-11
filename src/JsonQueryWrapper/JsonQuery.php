@@ -13,7 +13,7 @@ namespace JsonQueryWrapper;
 
 use JsonQueryWrapper\DataProvider\DataProviderInterface;
 use JsonQueryWrapper\Exception\DataProviderMissingException;
-use Symfony\Component\Process\ProcessBuilder;
+use JsonQueryWrapper\Process\ProcessFactoryInterface;
 
 /**
  * Class JsonQuery.
@@ -21,9 +21,9 @@ use Symfony\Component\Process\ProcessBuilder;
 class JsonQuery
 {
     /**
-     * @var ProcessBuilder
+     * @var ProcessFactoryInterface
      */
-    protected $builder;
+    protected $processFactory;
 
     /**
      * @var DataTypeMapper
@@ -45,23 +45,13 @@ class JsonQuery
     /**
      * JsonQuery constructor.
      *
-     * @param ProcessBuilder $builder
+     * @param ProcessFactoryInterface $processFactory
      * @param DataTypeMapper $dataTypeMapper
      */
-    public function __construct(ProcessBuilder $builder, DataTypeMapper $dataTypeMapper)
+    public function __construct(ProcessFactoryInterface $processFactory, DataTypeMapper $dataTypeMapper)
     {
-        $this->builder = $builder;
+        $this->processFactory = $processFactory;
         $this->mapper = $dataTypeMapper;
-    }
-
-    /**
-     * Set the path to the jq command.
-     *
-     * @param string $cmd
-     */
-    public function setCmd($cmd)
-    {
-        $this->cmd = $cmd;
     }
 
     /**
@@ -69,9 +59,9 @@ class JsonQuery
      *
      * @param string $filter
      *
-     * @throws DataProviderMissingException
-     *
      * @return mixed
+     * @throws DataProviderMissingException
+     * @throws Exception\DataTypeMapperException
      */
     public function run($filter)
     {
@@ -79,12 +69,10 @@ class JsonQuery
             throw new DataProviderMissingException('A data provider such as file or text is missing.');
         }
 
-        $builder = $this->builder;
-        $builder
-            ->setPrefix($this->cmd)
-            ->setArguments(['-M', $filter, $this->dataProvider->getPath()]);
+        $command = [$this->cmd, '-M', $filter, $this->dataProvider->getPath()];
 
-        $process = $builder->getProcess();
+        $process = $this->processFactory->build($command);
+
         $process->run();
 
         $result = trim($process->getOutput());
