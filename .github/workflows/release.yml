@@ -6,16 +6,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Setup Node.js for use with actions
-      uses: actions/setup-node@v2.1.4
+    - uses: actions/setup-node@v2.1.4
 
-    - name: Checkout
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-    - name: Unshallow
+    - name: git/unshallow
       run: git fetch --prune --unshallow
 
-    - name: Run semantic-release
-      run: npx -p @semantic-release/changelog -p semantic-release@17.3.0 -p @semantic-release/git semantic-release
+    - name: semantic-release
+      run: npx -p @semantic-release/changelog -p @semantic-release/git semantic-release
       env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
