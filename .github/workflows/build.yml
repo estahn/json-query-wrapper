@@ -44,4 +44,4 @@ jobs:
       - uses: php-actions/phpunit@v2
         with:
           php_version: ${{ matrix.php }}
-          phpunit_version: ${{ matrix.phpunit }}
+          version: ${{ matrix.phpunit }}
