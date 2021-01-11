@@ -6,14 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - uses: actions/setup-node@v2.1.4
-
     - uses: actions/checkout@v2
 
     - name: git/unshallow
       run: git fetch --prune --unshallow
 
-    - name: semantic-release
-      run: npx -p @semantic-release/changelog -p semantic-release -p @semantic-release/git semantic-release
+    - uses: cycjimmy/semantic-release-action@v2
       env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
