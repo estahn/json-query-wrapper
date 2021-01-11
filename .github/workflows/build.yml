@@ -26,9 +26,17 @@ jobs:
         - 7.3
         - 7.4
         - 8.0
+        phpunit:
+        - 7.5.20
+        - 8.5.13
+        - 9.5.0
+        - 9.5.0
+        - 9.5.0
+
     steps:
       - uses: actions/checkout@v2
       - uses: php-actions/composer@v5
       - uses: php-actions/phpunit@v2
         with:
           php_version: ${{ matrix.php }}
+          phpunit_version: ${{ matrix.phpunit }}
