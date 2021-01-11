@@ -9,11 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\JsonQueryWrapper;
+namespace JsonQueryWrapper;
 
 use JsonQueryWrapper\DataProvider\Text;
-use JsonQueryWrapper\DataTypeMapper;
-use JsonQueryWrapper\JsonQuery;
+use PHPUnit\Framework\TestCase;
 use JsonQueryWrapper\Process\ProcessFactoryInterface;
 use Symfony\Component\Process\Process;
 
@@ -21,7 +20,7 @@ use Symfony\Component\Process\Process;
 /**
  * Class JsonQuery.
  */
-class JsonQueryTest extends \PHPUnit_Framework_TestCase
+class JsonQueryTest extends TestCase
 {
     public function testCmdChange()
     {

@@ -9,23 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\JsonQueryWrapper;
+namespace JsonQueryWrapper;
 
-use JsonQueryWrapper\JsonQueryFactory;
+use JsonQueryWrapper\Exception\DataProviderMissingException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class JsonQueryFactoryTest.
  */
-class JsonQueryFactoryTest extends \PHPUnit_Framework_TestCase
+class JsonQueryFactoryTest extends TestCase
 {
-    /**
-     * @expectedException \JsonQueryWrapper\Exception\DataProviderMissingException
-     */
     public function testCreate()
     {
+        $this->expectException(DataProviderMissingException::class);
+
         $jq = JsonQueryFactory::create();
 
-        $this->assertInstanceOf('JsonQueryWrapper\JsonQuery', $jq);
+        $this->assertInstanceOf(JsonQuery::class, $jq);
 
         $jq->run('boom');
     }
@@ -33,6 +33,6 @@ class JsonQueryFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateWith()
     {
         $jq = JsonQueryFactory::createWith(json_encode(['Foo' => ['Bar' => 33]]));
-        $this->assertInstanceOf('JsonQueryWrapper\JsonQuery', $jq);
+        $this->assertInstanceOf(JsonQuery::class, $jq);
     }
 }

@@ -9,21 +9,22 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\JsonQueryWrapper;
+namespace JsonQueryWrapper;
 
-use JsonQueryWrapper\DataTypeMapper;
+use JsonQueryWrapper\Exception\DataTypeMapperException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class DataTypeMapperTest.
  */
-class DataTypeMapperTest extends \PHPUnit_Framework_TestCase
+class DataTypeMapperTest extends TestCase
 {
     /**
      * @var DataTypeMapper
      */
     protected $mapper;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->mapper = new DataTypeMapper();
     }
@@ -44,7 +45,7 @@ class DataTypeMapperTest extends \PHPUnit_Framework_TestCase
     {
         $value = $this->mapper->map('"33"');
 
-        $this->assertInternalType('string', $value);
+        $this->assertIsString($value);
         $this->assertEquals('33', $value);
     }
 
@@ -52,7 +53,7 @@ class DataTypeMapperTest extends \PHPUnit_Framework_TestCase
     {
         $value = $this->mapper->map('33');
 
-        $this->assertInternalType('int', $value);
+        $this->assertIsInt($value);
         $this->assertEquals(33, $value);
     }
 
@@ -60,15 +61,13 @@ class DataTypeMapperTest extends \PHPUnit_Framework_TestCase
     {
         $value = $this->mapper->map('33.02');
 
-        $this->assertInternalType('float', $value);
+        $this->assertIsFloat($value);
         $this->assertEquals(33.02, $value);
     }
 
-    /**
-     * @expectedException \JsonQueryWrapper\Exception\DataTypeMapperException
-     */
     public function testParserError()
     {
+        $this->expectException(DataTypeMapperException::class);
         $this->mapper->map('parse error: Expected another key-value pair at line 7, column 1');
     }
 

@@ -35,7 +35,7 @@ class Text implements DataProviderInterface
      * When the php process finish deletes the temp file, with this attribute pointing to the temp file php waits to remove
      * the file until is not is finished
      *
-     * @var string
+     * @var resource
      */
     protected $file;
 

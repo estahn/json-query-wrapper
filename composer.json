@@ -1,5 +1,5 @@
 {
-    "name": "invoicesharing/json-query-wrapper",
+    "name": "estahn/json-query-wrapper",
     "type": "library",
     "description": "Wrapper for jq, a lightweight and flexible command-line JSON processor",
     "keywords": ["jq", "json", "query"],
@@ -13,12 +13,13 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7|^8",
+        "php": "^7.1|^8",
         "symfony/process": "^4|^5"
     },
     "require-dev": {
         "phpunit/phpunit": "^9",
-        "codacy/coverage": "dev-master"
+        "codacy/coverage": "dev-master",
+        "vimeo/psalm": "4.x-dev"
     },
     "autoload": {
         "psr-4": {

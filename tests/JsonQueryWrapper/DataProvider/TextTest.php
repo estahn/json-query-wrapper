@@ -9,14 +9,14 @@
  * file that was distributed with this source code.
  */
 
-namespace tests\JsonQueryWrapper\DataProvider;
+namespace JsonQueryWrapper\DataProvider;
 
-use JsonQueryWrapper\DataProvider\Text;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class TextTest.
  */
-class TextTest extends \PHPUnit_Framework_TestCase
+class TextTest extends TestCase
 {
     public function testGetPath()
     {
