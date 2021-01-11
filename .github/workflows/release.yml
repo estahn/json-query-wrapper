@@ -18,5 +18,4 @@ jobs:
     - name: Run semantic-release
       run: npx -p @semantic-release/changelog -p semantic-release@17.3.0 -p @semantic-release/git semantic-release
       env:
-        GH_TOKEN: ${{ secrets.PAT }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PAT }}
