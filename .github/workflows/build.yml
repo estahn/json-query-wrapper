@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Cache Composer dependencies
         uses: actions/cache@v2
@@ -32,6 +34,8 @@ jobs:
       - uses: php-actions/composer@v5
 
       - uses: php-actions/phpunit@v2
+        env:
+          XDEBUG_MODE: coverage
         with:
           php_extensions: xdebug
           args: --coverage-clover coverage.xml
