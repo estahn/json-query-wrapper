@@ -18,7 +18,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^7|^8|^9",
-        "codacy/coverage": "dev-master",
         "vimeo/psalm": "4.x-dev"
     },
     "autoload": {
