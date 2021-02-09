@@ -11,6 +11,8 @@
 
 namespace JsonQueryWrapper;
 
+use JsonQueryWrapper\CommandLineOption\CommandLineOption;
+use JsonQueryWrapper\CommandLineOption\CommandLineOptionInterface;
 use JsonQueryWrapper\DataProvider\DataProviderInterface;
 use JsonQueryWrapper\Exception\DataProviderMissingException;
 use JsonQueryWrapper\Process\ProcessFactoryInterface;
@@ -20,6 +22,11 @@ use JsonQueryWrapper\Process\ProcessFactoryInterface;
  */
 class JsonQuery
 {
+    /**
+     * @var CommandLineOptionInterface
+     */
+    protected $commandLineOption;
+
     /**
      * @var ProcessFactoryInterface
      */
@@ -47,11 +54,17 @@ class JsonQuery
      *
      * @param ProcessFactoryInterface $processFactory
      * @param DataTypeMapper $dataTypeMapper
+     * @param CommandLineOptionInterface|null $commandLineOption
      */
-    public function __construct(ProcessFactoryInterface $processFactory, DataTypeMapper $dataTypeMapper)
+    public function __construct(ProcessFactoryInterface $processFactory, DataTypeMapper $dataTypeMapper, ?CommandLineOptionInterface $commandLineOption = null)
     {
         $this->processFactory = $processFactory;
         $this->mapper = $dataTypeMapper;
+        if ($commandLineOption) {
+            $this->commandLineOption = $commandLineOption;
+        } else {
+            $this->commandLineOption = new CommandLineOption([CommandLineOptionInterface::OPTION_OUTPUT_MONOCHROME]);
+        }
     }
 
     /**
@@ -69,7 +82,13 @@ class JsonQuery
             throw new DataProviderMissingException('A data provider such as file or text is missing.');
         }
 
-        $command = [$this->cmd, '-M', $filter, $this->dataProvider->getPath()];
+        $options = $this->commandLineOption->getOptionsAsString();
+
+        if ($options !== null) {
+            $command = [$this->cmd, $options, $filter, $this->dataProvider->getPath()];
+        } else {
+            $command = [$this->cmd, $filter, $this->dataProvider->getPath()];
+        }
 
         $process = $this->processFactory->build($command);
 
