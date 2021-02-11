@@ -15,7 +15,9 @@ use JsonQueryWrapper\CommandLineOption\CommandLineOption;
 use JsonQueryWrapper\CommandLineOption\CommandLineOptionInterface;
 use JsonQueryWrapper\DataProvider\DataProviderInterface;
 use JsonQueryWrapper\Exception\DataProviderMissingException;
+use JsonQueryWrapper\Exception\DataTypeMapperException;
 use JsonQueryWrapper\Process\ProcessFactoryInterface;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 /**
  * Class JsonQuery.
@@ -73,8 +75,7 @@ class JsonQuery
      * @param string $filter
      *
      * @return mixed
-     * @throws DataProviderMissingException
-     * @throws Exception\DataTypeMapperException
+     * @throws DataProviderMissingException|\RuntimeException
      */
     public function run($filter)
     {
@@ -83,20 +84,22 @@ class JsonQuery
         }
 
         $options = $this->commandLineOption->getOptionsAsString();
-
         if ($options !== null) {
             $command = [$this->cmd, $options, $filter, $this->dataProvider->getPath()];
         } else {
             $command = [$this->cmd, $filter, $this->dataProvider->getPath()];
         }
 
-        $process = $this->processFactory->build($command);
-
-        $process->run();
-
-        $result = trim($process->getOutput());
-
-        return $this->mapper->map($result);
+        try {
+            $process = $this->processFactory->build($command);
+            $process->mustRun();
+            $result = trim($process->getOutput());
+            return $this->mapper->map($result);
+        } catch (ProcessFailedException $processFailedException) {
+            throw new \RuntimeException(trim($process->getErrorOutput()), $processFailedException->getProcess()->getExitCode(), $processFailedException);
+        } catch (DataTypeMapperException $dataTypeMapperException) {
+            throw new \RuntimeException($dataTypeMapperException->getMessage(), $dataTypeMapperException->getCode(), $dataTypeMapperException);
+        }
     }
 
     /**
