@@ -30,6 +30,8 @@ class JsonQueryTest extends TestCase
 
         $process = $this->createMock(Process::class);
         $process
+            ->method('mustRun');
+        $process
             ->method('run');
 
         $process
@@ -49,7 +51,7 @@ class JsonQueryTest extends TestCase
         );
 
         $sut->setDataProvider($dataProvider);
-        static::assertEquals(
+        $this->assertEquals(
             $expected,
             $sut->run('.name')
         );

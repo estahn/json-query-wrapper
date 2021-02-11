@@ -78,10 +78,8 @@ class DataTypeMapperTest extends TestCase
 
     public function testJson()
     {
-        $this->markTestIncomplete('Need to decide whether to convert JSON data');
-
-        $json = ['Foo' => ['Bar' => 33]];
-        $this->assertEquals('Foo', $this->mapper->map(json_encode($json)));
+        $json = (object)['Foo' => (object)['Bar' => 33]];
+        $this->assertEquals($json, $this->mapper->map(json_encode($json)));
     }
 
     public function testGarbage()

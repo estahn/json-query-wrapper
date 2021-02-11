@@ -29,31 +29,17 @@ class DataTypeMapper
      */
     public function map($value)
     {
-        if ($value === 'true') {
-            return true;
-        }
-
-        if ($value === 'false') {
-            return false;
+        $boolean = filter_var($value, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE);
+        if ($boolean !== null) {
+            return $boolean;
         }
 
         if ($value === 'null') {
-            return;
+            return null;
         }
 
-        // Map integers
-        if (preg_match('/^(\d+)$/', $value, $matches)) {
-            return (int) $matches[1];
-        }
-
-        // Map floats
-        if (preg_match('/^(\d+\.\d+)$/', $value, $matches)) {
-            return (float) $matches[1];
-        }
-
-        // Map strings
-        if (preg_match('/^"(.*)"$/', $value, $matches)) {
-            return $matches[1];
+        if (is_numeric($value)) {
+            return $value + 0;
         }
 
         // Map parser error
@@ -61,6 +47,15 @@ class DataTypeMapper
             throw new DataTypeMapperException($matches[1]);
         }
 
+        // Map strings
+        if (preg_match('/^"(.*)"$/', $value, $matches)) {
+            return $matches[1];
+        }
+
+        $data = json_decode($value);
+        if ($data !== null) {
+            return $data;
+        }
         return $value;
     }
 }

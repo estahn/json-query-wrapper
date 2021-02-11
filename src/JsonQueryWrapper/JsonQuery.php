@@ -11,15 +11,24 @@
 
 namespace JsonQueryWrapper;
 
+use JsonQueryWrapper\CommandLineOption\CommandLineOption;
+use JsonQueryWrapper\CommandLineOption\CommandLineOptionInterface;
 use JsonQueryWrapper\DataProvider\DataProviderInterface;
 use JsonQueryWrapper\Exception\DataProviderMissingException;
+use JsonQueryWrapper\Exception\DataTypeMapperException;
 use JsonQueryWrapper\Process\ProcessFactoryInterface;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 /**
  * Class JsonQuery.
  */
 class JsonQuery
 {
+    /**
+     * @var CommandLineOptionInterface
+     */
+    protected $commandLineOption;
+
     /**
      * @var ProcessFactoryInterface
      */
@@ -47,11 +56,17 @@ class JsonQuery
      *
      * @param ProcessFactoryInterface $processFactory
      * @param DataTypeMapper $dataTypeMapper
+     * @param CommandLineOptionInterface|null $commandLineOption
      */
-    public function __construct(ProcessFactoryInterface $processFactory, DataTypeMapper $dataTypeMapper)
+    public function __construct(ProcessFactoryInterface $processFactory, DataTypeMapper $dataTypeMapper, ?CommandLineOptionInterface $commandLineOption = null)
     {
         $this->processFactory = $processFactory;
         $this->mapper = $dataTypeMapper;
+        if ($commandLineOption) {
+            $this->commandLineOption = $commandLineOption;
+        } else {
+            $this->commandLineOption = new CommandLineOption([CommandLineOptionInterface::OPTION_OUTPUT_MONOCHROME]);
+        }
     }
 
     /**
@@ -60,8 +75,7 @@ class JsonQuery
      * @param string $filter
      *
      * @return mixed
-     * @throws DataProviderMissingException
-     * @throws Exception\DataTypeMapperException
+     * @throws DataProviderMissingException|\RuntimeException
      */
     public function run($filter)
     {
@@ -69,15 +83,23 @@ class JsonQuery
             throw new DataProviderMissingException('A data provider such as file or text is missing.');
         }
 
-        $command = [$this->cmd, '-M', $filter, $this->dataProvider->getPath()];
+        $options = $this->commandLineOption->getOptionsAsString();
+        if ($options !== null) {
+            $command = [$this->cmd, $options, $filter, $this->dataProvider->getPath()];
+        } else {
+            $command = [$this->cmd, $filter, $this->dataProvider->getPath()];
+        }
 
-        $process = $this->processFactory->build($command);
-
-        $process->run();
-
-        $result = trim($process->getOutput());
-
-        return $this->mapper->map($result);
+        try {
+            $process = $this->processFactory->build($command);
+            $process->mustRun();
+            $result = trim($process->getOutput());
+            return $this->mapper->map($result);
+        } catch (ProcessFailedException $processFailedException) {
+            throw new \RuntimeException(trim($process->getErrorOutput()), $processFailedException->getProcess()->getExitCode(), $processFailedException);
+        } catch (DataTypeMapperException $dataTypeMapperException) {
+            throw new \RuntimeException($dataTypeMapperException->getMessage(), $dataTypeMapperException->getCode(), $dataTypeMapperException);
+        }
     }
 
     /**
