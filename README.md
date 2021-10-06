@@ -17,7 +17,7 @@ json-query-wrapper is a wrapper for the popular command-line JSON processor "[jq
 ## Installation
 
 ```bash
-$ composer require invoicesharing/json-query-wrapper
+$ composer require estahn/json-query-wrapper
 ```
 
 ## Usage
