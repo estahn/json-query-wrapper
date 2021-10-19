@@ -58,6 +58,31 @@ $jq->setDataProvider(new JsonQueryWrapper\DataProvider\File('test.json');
 $jq->run('.Foo.Bar == "33"'); # Returns bool(true)
 ```
 
+## Command Line Options
+
+This enables passing additional command line options to `jq` to customize output and behavior. Currently, the following options are supported:
+
+| Option | `jq` Option | Default? | Description |
+| --- | --- | --- | --- |
+| OPTION_EXIT_BASED_ON_OUTPUT | -e | no | set exit status based on whether output was successful |
+| OPTION_INPUT_RAW | -R | no | don't parse input as JSON |
+| OPTION_NULL_INPUT | -n | no | don't read any input at all |
+| OPTION_OUTPUT_COLORIZE | -C | no | colorize output on shell |
+| OPTION_OUTPUT_COMPACT | -c | no | compact output, don't pretty print |
+| OPTION_OUTPUT_JOIN | -j | no | join each line of output, don't print newline |
+| OPTION_OUTPUT_MONOCHROME | -M | yes | don't colorize output on the shell, print plainly |
+| OPTION_OUTPUT_RAW | -r | no | write output directly, don't convert to JSON |
+| OPTION_OUTPUT_SORT_KEYS | -S | no | sort keys in the output |
+
+If not explicitly set, only the monochrome option will be set. More information about all these command line options can be found in the [jq manual](https://stedolan.github.io/jq/manual/#Invokingjq). To use command line options, just pass an array to the `JsonQueryFactory::create` or `JsonQueryFactory::createWith` methods:
+
+```php
+$options = [JsonQueryWrapper\CommandLineOption\CommandLineOption::OPTION_OUTPUT_JOIN, JsonQueryWrapper\CommandLineOption\CommandLineOption::OPTION_OUTPUT_SORT_KEYS];
+$jq = JsonQueryWrapper\JsonQueryFactory::createWith('test.json', $options);
+$jq->run('.Foo.Bar'); # string(33)
+```
+
+
 ## Data Providers
 
 A "Data Provider" provides the wrapper with the necessary data to read from. It's a common interface for several providers. All providers implement the `DataProviderInterface` which essentially returns a path to the file for `jq`.
