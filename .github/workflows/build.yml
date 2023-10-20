@@ -5,7 +5,7 @@ jobs:
   psalm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Psalm
         uses: docker://vimeo/psalm-github-actions
@@ -69,7 +69,7 @@ jobs:
             phpunit: 9.5.0
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Cache Composer dependencies
         uses: actions/cache@v2
