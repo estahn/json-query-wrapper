@@ -14,7 +14,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.1|^8",
-        "symfony/process": "^4|^5"
+        "symfony/process": "7.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7|^8|^9",
